@@ -5,10 +5,15 @@ const mongoose = require("mongoose")
 const dotenv = require("dotenv")
 
 
-app.get("/employeedata", (req, res) => {
-    res.send("Running on Port 5100")
-})
+dotenv.config()
+app.use(express.json())
+app.use(cors())
 
-app.listen("5100", () => {
-    console.log("Running on Port 5100");
+mongoose.connect(process.env.mongouri)
+.then(() => {
+    console.log("Db Connected");
+    
 })
+app.get("/api/users", router)
+
+app.listen("5100", () => { })
