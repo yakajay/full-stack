@@ -3,7 +3,7 @@ const User = require("../models/User")
 const createUser = async(req, res) => {
     try {
         const data = await User.create(req.body)
-        return res.Status(200).json(data)
+        return res.status(200).json(data)
     } catch (error) {
         console.log(error);
     }

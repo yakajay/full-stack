@@ -3,6 +3,7 @@ const app = express()
 const router = require("./routes/userRoutes")
 const mongoose = require("mongoose")
 const dotenv = require("dotenv")
+const cors = require("cors")
 
 
 dotenv.config()
@@ -14,6 +15,6 @@ mongoose.connect(process.env.mongouri)
     console.log("Db Connected");
     
 })
-app.get("/api/users", router)
+app.use("/api/users", router)
 
 app.listen("5100", () => { })
