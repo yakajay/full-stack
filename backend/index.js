@@ -1,10 +1,10 @@
 const express = require("express")
 const app = express()
-const router = require("./routes/userRoutes")
+const router = require("./src/routes/userRoutes")
 const mongoose = require("mongoose")
 const dotenv = require("dotenv")
 const cors = require("cors")
-const authRouter = require("./routes/authRoutes")
+const authRouter = require("./src/routes/authRoutes")
 
 
 dotenv.config()
