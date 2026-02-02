@@ -5,6 +5,7 @@ const mongoose = require("mongoose")
 const dotenv = require("dotenv")
 const cors = require("cors")
 const authRouter = require("./src/routes/authRoutes")
+const authMiddleWare = require("./src/middleware/middleWare")
 
 
 dotenv.config()
@@ -16,7 +17,7 @@ mongoose.connect(process.env.mongouri)
     console.log("Db Connected");
     
 })
-app.use("/api/users", router)
-app.use("auth", authRouter)
+app.use("/api/users", authMiddleWare, router)
+app.use("/auth", authRouter)
 
 app.listen("5100", () => { })
