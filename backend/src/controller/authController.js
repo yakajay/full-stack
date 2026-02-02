@@ -6,23 +6,24 @@ const env = require("dotenv")
 env.config()
 
 exports.register = async (req, res) => {
-    const { username, email, password } = res.body
+    const { username, email, password } = req.body
     try {
         const user = await Auth.findOne({email})
         if (user) {
             return res.status(401).json({MSG: "Email Exists"})
         }
-        const hashPassword = await bcrypt.compare(password, 10)
+        const hashPassword = await bcrypt.hash(password, 10)
         const data = await Auth.create({
             username, email, password: hashPassword
         })
+        res.json(data)
     } catch (error) {
         console.log(error);
     }
 }
 
 exports.login = async (req, res) => {
-    const { email, password } = res.body
+    const { email, password } = req.body
     try {
         const user = await Auth.findOne({email})
         if (!user) {
@@ -35,8 +36,8 @@ exports.login = async (req, res) => {
         const jwtToken = jwt.sign(
             {id: user._id}, process.env.SECRET_KEY, {expiresIn: "1h"}
         )
-        res.json(jwtToken)
+        res.json({token: jwtToken})
     } catch (error) {
-        console.log(error);
+        return res.status(500).json({MSG: "Server Error"})
     }
 }
